@@ -101,7 +101,13 @@ function LandingPage({ setIsModalOpen }) {
     <main className="relative min-h-screen bg-gray-900 text-white">
       <WavyBackground className="max-w-4xl mx-auto">
       <section className="container flex min-h-[calc(100vh-3.5rem)] max-w-screen-2xl mt-14 flex-col items-center justify-center space-y-8 py-24 text-center md:py-32">
-      <div className="space-y-10">
+      <div className="space-y-12">
+      <button className="p-[3px] relative">
+  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+  <div className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white text-1xl  font-semibold">
+  Comprehensive 11-Metric Financial Analysis
+  </div>
+</button>
         <h1 className="bg-white bg-clip-text text-4xl  font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
      Financial Reporting Completely Revolutionized
           <br />
@@ -111,12 +117,34 @@ function LandingPage({ setIsModalOpen }) {
         </p>
       </div>
 
-      <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="inline-flex items-center justify-center rounded-md h-11 px-8 border border-input bg-background hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                >
-                  Get Started  <ArrowRight className="ml-2 h-4 w-4" />
-                </button>
+                <button onClick={() => setIsModalOpen(true)} className="bg-slate-800 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-base font-semibold leading-6 text-white inline-block">
+  <span className="absolute inset-0 overflow-hidden rounded-full">
+    <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(56,189,248,0.6)_0%,rgba(56,189,248,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+  </span>
+  <div className="relative flex space-x-2 items-center z-10 rounded-full bg-zinc-950 py-3 px-8 ring-1 ring-white/10 ">
+    <span>
+      Start Now
+    </span>
+    <svg
+      fill="none"
+      height="24"  
+      viewBox="0 0 24 24"
+      width="24"  
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.75 8.75L14.25 12L10.75 15.25"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+    </svg>
+  </div>
+  <span className="absolute -bottom-0 left-[1.125rem] h-px w-[calc(100%-2.25rem)] bg-gradient-to-r from-emerald-400/0 via-emerald-400/90 to-emerald-400/0 transition-opacity duration-500 group-hover:opacity-40" />
+</button>
+
+
     </section>
       </WavyBackground>
 
@@ -124,10 +152,10 @@ function LandingPage({ setIsModalOpen }) {
       <section id="features" className="py-20 bg-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fadeIn">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4">
             Powerful Features for Financial Analysis
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-gray-400 text-2xl max-w-2xl mx-auto">
             Experience cutting-edge AI technology that transforms your financial data into actionable insights
           </p>
         </div>
@@ -152,10 +180,10 @@ function LandingPage({ setIsModalOpen }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16 animate__animated animate__fadeIn">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4">
-            How Our AI Generates Reliable Financial Insights
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4">
+            How Our Model Works
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <p className="text-gray-400 text-2xl max-w-2xl mx-auto">
             A sophisticated process that ensures accuracy and reliability at every step
           </p>
         </div>
