@@ -117,28 +117,6 @@ function LandingPage({ setIsModalOpen }) {
           </div>
       </WavyBackground>
 
-      {/* Introduction Section */}
-      <section className="py-20 bg-gray-800">
-        <div className="container mx-auto px-6">
-          <h2 className="text-4xl font-bold mb-8 text-center">Welcome to the Future of Financial Narratives</h2>
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="md:w-1/2 mb-8 md:mb-0">
-              <p className="text-xl leading-relaxed mb-4">
-                Our AI-powered system generates financial reports and narratives that are accurate, coherent, and
-                data-driven. Say goodbye to misinformation and hello to reliable insights.
-              </p>
-            </div>
-            <div className="md:w-1/2">
-              <img
-                src="/placeholder.svg?height=300&width=400"
-                alt="Financial data analysis"
-                className="rounded-lg shadow-xl"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Features Section */}
       <section id="features" className="py-20 bg-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
