@@ -78,46 +78,43 @@ function LandingPage({ setIsModalOpen }) {
   return (
     <main className="relative min-h-screen bg-gray-900 text-white">
       <WavyBackground className="max-w-4xl mx-auto">
-        <div className="max-w-7xl w-full px-6 pt-24">
-          <div className="text-center space-y-12">
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight md:leading-tight">
+          <div className="max-w-7xl w-full px-6 pt-36">
+            <div className="text-center space-y-12">
+              <h1 className="text-4xl md:text-5xl font-bold leading-tight md:leading-tight">
               <span
-                className="text-transparent"
+    className="text-white" // Tailwind class to make text white
+    style={{
+      fontFamily: "Manrope, sans-serif",
+      fontStyle: "normal",
+      fontWeight: 700,
+      // Removed gradient and Webkit properties for solid color
+    }}
+  >
+    Revolutionize Financial Reporting
+    <br />
+    with Artificial Intelligence
+  </span>
+              </h1>
+
+              <p
+                className="text-xl md:text-1xl text-white-600 max-w-1xl mx-auto leading-relaxed"
                 style={{
                   fontFamily: "Manrope, sans-serif",
-                  fontStyle: "normal",
-                  fontWeight: 700,
-                  background: "linear-gradient(180deg, #fff, #ffffff4f)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  textWrap: "balance",
                 }}
               >
-                Revolutionize Financial Reporting
-                <br />
-                with Artificial Intelligence
-              </span>
-            </h1>
+                Accurate, Data-Driven Financial Insights with Probabilistic Consistency
+              </p>
 
-            <p
-              className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed"
-              style={{
-                fontFamily: "Manrope, sans-serif",
-              }}
-            >
-              Accurate, Data-Driven Financial Insights with Probabilistic Consistency
-            </p>
-
-            <div className="pt-4">
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-10 py-4 rounded-lg text-xl font-semibold transition-all duration-200 hover:transform hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Get Started
-              </button>
+              <div className="pt-4">
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-10 py-4 rounded-lg text-xl font-semibold transition-all duration-200 hover:transform hover:scale-105 shadow-lg hover:shadow-xl"
+                >
+                  Get Started
+                </button>
+              </div>
             </div>
           </div>
-        </div>
       </WavyBackground>
 
       {/* Introduction Section */}

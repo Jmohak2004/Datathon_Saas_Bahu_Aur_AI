@@ -65,7 +65,7 @@ export const WavyBackground = ({
       ctx.strokeStyle = waveColors[i % waveColors.length];
       for (x = 0; x < w; x += 5) {
         var y = noise(x / 800, 0.3 * i, nt) * 100;
-        ctx.lineTo(x, y + h * 0.5); // adjust for height, currently at 50% of the container
+        ctx.lineTo(x, y + h * 0.45); // Change 0.5 to 0.4 (or a smaller value) to move waves higher
       }
       ctx.stroke();
       ctx.closePath();
@@ -106,7 +106,7 @@ export const WavyBackground = ({
         style={{
           ...(isSafari ? { filter: `blur(${blur}px)` } : {}),
         }}></canvas>
-      <div className={cn("relative z-1", className)} {...props}>
+      <div className={cn("relative z-1lex flex-nowrap", className)} {...props}>
         {children}
       </div>
     </div>)
