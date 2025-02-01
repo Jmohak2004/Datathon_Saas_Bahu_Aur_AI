@@ -16,7 +16,7 @@ function UploadModal({ isOpen, setIsOpen }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-10">
       <div className="bg-gray-800 rounded-lg p-8 max-w-md w-full">
         <h2 className="text-2xl font-bold mb-6">Get Started</h2>
         <form onSubmit={handleSubmit} className="space-y-6">

@@ -16,7 +16,7 @@ function DashboardPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
+    <div className="max-w-7xl mx-auto px-6 py-28">
       <h1 className="text-3xl font-bold mb-8">Financial Dashboard</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
