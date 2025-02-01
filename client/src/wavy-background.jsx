@@ -65,7 +65,7 @@ export const WavyBackground = ({
       ctx.strokeStyle = waveColors[i % waveColors.length];
       for (x = 0; x < w; x += 5) {
         var y = noise(x / 800, 0.3 * i, nt) * 100;
-        ctx.lineTo(x, y + h * 0.45); // Change 0.5 to 0.4 (or a smaller value) to move waves higher
+        ctx.lineTo(x, y + h * 0.5); // Change 0.5 to 0.4 (or a smaller value) to move waves higher
       }
       ctx.stroke();
       ctx.closePath();
