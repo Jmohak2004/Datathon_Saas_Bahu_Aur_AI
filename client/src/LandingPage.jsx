@@ -1,4 +1,7 @@
 import { WavyBackground } from "./wavy-background"
+import React from 'react';
+import { ArrowRight } from 'lucide-react';
+
 const FeatureCard = ({ icon, title, description, delay }) => (
   <div 
     className="bg-neutral-900 p-6 rounded-xl border border-neutral-700 hover:border-blue-500 transition-all duration-300 animate-fadeIn"
@@ -15,6 +18,25 @@ const FeatureCard = ({ icon, title, description, delay }) => (
     <p className="text-gray-400">{description}</p>
   </div>
 );
+const Button = ({ children, variant = "default", size = "default", className = "" }) => {
+  const baseStyles = "inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
+  
+  const variants = {
+    default: "bg-primary text-primary-foreground hover:opacity-90",
+    outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground"
+  };
+  
+  const sizes = {
+    default: "h-10 px-4 py-2",
+    lg: "h-11 rounded-md px-8"
+  };
+  
+  return (
+    <button className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}>
+      {children}
+    </button>
+  );
+};
 
 function LandingPage({ setIsModalOpen }) {
   const features = [
@@ -78,43 +100,24 @@ function LandingPage({ setIsModalOpen }) {
   return (
     <main className="relative min-h-screen bg-gray-900 text-white">
       <WavyBackground className="max-w-4xl mx-auto">
-          <div className="max-w-7xl w-full px-6 pt-36">
-            <div className="text-center space-y-12">
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight md:leading-tight">
-              <span
-    className="text-white" // Tailwind class to make text white
-    style={{
-      fontFamily: "Manrope, sans-serif",
-      fontStyle: "normal",
-      fontWeight: 700,
-      // Removed gradient and Webkit properties for solid color
-    }}
-  >
-    Revolutionize Financial Reporting
-    <br />
-    with Artificial Intelligence
-  </span>
-              </h1>
+      <section className="container flex min-h-[calc(100vh-3.5rem)] max-w-screen-2xl mt-14 flex-col items-center justify-center space-y-8 py-24 text-center md:py-32">
+      <div className="space-y-10">
+        <h1 className="bg-white bg-clip-text text-4xl  font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
+     Financial Reporting Completely Revolutionized
+          <br />
+        </h1>
+        <p className="mx-auto max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
+        Transform raw financial data into coherent, insightful, and reliable reports with cutting-edge AI and probabilistic consistency
+        </p>
+      </div>
 
-              <p
-                className="text-xl md:text-1xl text-white-600 max-w-1xl mx-auto leading-relaxed"
-                style={{
-                  fontFamily: "Manrope, sans-serif",
-                }}
-              >
-                Accurate, Data-Driven Financial Insights with Probabilistic Consistency
-              </p>
-
-              <div className="pt-4">
-                <button
+      <button
                   onClick={() => setIsModalOpen(true)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-10 py-4 rounded-lg text-xl font-semibold transition-all duration-200 hover:transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center justify-center rounded-md h-11 px-8 border border-input bg-background hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                 >
-                  Get Started
+                  Get Started  <ArrowRight className="ml-2 h-4 w-4" />
                 </button>
-              </div>
-            </div>
-          </div>
+    </section>
       </WavyBackground>
 
       {/* Features Section */}
