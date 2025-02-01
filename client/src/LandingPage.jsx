@@ -3,10 +3,9 @@ import React from "react";
 
 function LandingPage({ setIsModalOpen }) {
   return (
-    <>
-      <div className="min-h-[calc(100vh-64px)] flex items-center justify-center">
-        <WavyBackground className="max-w-4xl mx-auto pb-40">
-        <div className="max-w-7xl w-full px-6">
+    <main className="relative min-h-screen">
+      <WavyBackground className="max-w-4xl mx-auto">
+        <div className="max-w-7xl w-full px-6 pt-24"> {/* Added pt-24 for navbar space */}
           <div className="text-center space-y-12">  
             <h1 className="text-5xl md:text-6xl font-bold leading-tight md:leading-tight">
               <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
@@ -15,6 +14,7 @@ function LandingPage({ setIsModalOpen }) {
                 with Artificial Intelligence
               </span>
             </h1>
+            
             <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
               Accurate, Data-Driven Financial Insights with Probabilistic Consistency
             </p>
@@ -29,9 +29,8 @@ function LandingPage({ setIsModalOpen }) {
             </div>
           </div>
         </div>
-        </WavyBackground>
-      </div>
-      </>
+      </WavyBackground>
+    </main>
   );
 }
 
