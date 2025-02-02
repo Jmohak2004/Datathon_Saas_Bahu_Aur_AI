@@ -21,6 +21,11 @@ const Navbar = () => {
       setIsMobileMenuOpen(false);
       return;
     }
+    if (sectionId === '/charts') {
+      navigate('/charts');
+      setIsMobileMenuOpen(false);
+      return;
+    }
     
     const element = document.querySelector(sectionId);
     if (element) {
@@ -64,6 +69,7 @@ const Navbar = () => {
     ['Features', '#features'],
     ['How It Works', '#howitworks'],
     ['Dashboard', '/dashboard'],
+    ['Charts', '/charts'],
   ].map(([label, href]) => (
     <a
       key={label}
@@ -138,6 +144,7 @@ const Navbar = () => {
             ['Features', '#features'],
             ['How It Works', '#howitworks'],
             ['Dashboard', '/dashboard'],
+            ['Charts', '/charts'],
           ].map(([label, href]) => (
             <a
               key={label}
