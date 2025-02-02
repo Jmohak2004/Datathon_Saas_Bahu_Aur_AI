@@ -152,7 +152,7 @@ function LandingPage({ setIsModalOpen }) {
       <section id="features" className="py-20 bg-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fadeIn">
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent mb-4">
             Powerful Features for Financial Analysis
           </h2>
           <p className="text-gray-400 text-2xl max-w-2xl mx-auto">
@@ -180,7 +180,7 @@ function LandingPage({ setIsModalOpen }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16 animate__animated animate__fadeIn">
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-500 to-cyan-500 bg-clip-text text-transparent mb-4">
             How Our Model Works
           </h2>
           <p className="text-gray-400 text-2xl max-w-2xl mx-auto">
