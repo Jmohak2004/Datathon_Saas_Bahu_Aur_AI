@@ -1,8 +1,32 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart, Area } from 'recharts';
 import './charts.css';
+import { MultiStepLoader as Loader } from "./multi-step-loader";
+import { IconSquareRoundedX } from "@tabler/icons-react";
+
+
+const loadingStates = [
+  {
+    text: "Analysing Data",
+  },
+  {
+    text: "Verifying Data",
+  },
+  {
+    text: "Contructing Results",
+  },
+  {
+    text: "Verifing Results",
+  },
+  {
+    text: "Rendering Data on the WebPage",
+  },
+  
+];
 
 const ChartsPage = () => {
+  const [loading, setLoading] = useState(false);
+  
   const [companyName, setCompanyName] = useState('');
   const [data, setData] = useState(null);
 
@@ -77,7 +101,20 @@ const ChartsPage = () => {
             onChange={(e) => setCompanyName(e.target.value)}
             placeholder="Enter company name"
           />
-          <button onClick={handleGenerate}>Generate Analysis</button>
+           <Loader loadingStates={loadingStates} loading={loading} duration={2000} />
+ 
+           <button onClick={() => { 
+  handleGenerate(); 
+  setLoading(true); 
+}}>Generate Analysis</button>
+ {loading && (
+        <button
+          className="fixed top-4 right-4 text-black dark:text-white z-[120]"
+          onClick={() => setLoading(false)}
+        >
+          <IconSquareRoundedX className="h-10 w-10" />
+        </button>
+      )}
         </div>
       </div>
 

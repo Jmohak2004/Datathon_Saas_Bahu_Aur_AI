@@ -21,6 +21,11 @@ const Navbar = () => {
       setIsMobileMenuOpen(false);
       return;
     }
+    if (sectionId === '/audio') {
+      navigate('/audio');
+      setIsMobileMenuOpen(false);
+      return;
+    }
     if (sectionId === '/charts') {
       navigate('/charts');
       setIsMobileMenuOpen(false);
@@ -140,11 +145,11 @@ const Navbar = () => {
       <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {[
-            ['Home', '#hero'],
+            ['Home', '/'],
             ['Features', '#features'],
             ['How It Works', '#howitworks'],
             ['Dashboard', '/dashboard'],
-            ['Charts', '/charts'],
+            ['Charts', '/charts'],  
           ].map(([label, href]) => (
             <a
               key={label}

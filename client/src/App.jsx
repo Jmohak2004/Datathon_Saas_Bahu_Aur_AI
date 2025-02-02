@@ -5,6 +5,7 @@ import LandingPage from './LandingPage';
 import DashboardPage from './Dashboard';
 import UploadModal from './UploadModal';
 import ChartsPage from './ChartsPage';
+import Audio from './Audio';
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<LandingPage setIsModalOpen={setIsModalOpen} />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/charts" element={<ChartsPage />} />
+          <Route path="/audio" element={<Audio/>} />
         </Routes>
         <UploadModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       </div>

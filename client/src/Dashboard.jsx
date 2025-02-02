@@ -1,273 +1,245 @@
-import React, { useState, useEffect } from 'react';
-import { Line, Bar, Scatter, Pie } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
+import { useState } from "react"
+import { GoogleGenerativeAI } from "@google/generative-ai"
+import { jsPDF } from "jspdf"
+import { saveAs } from "file-saver"
+import { Document, Packer, Paragraph, TextRun } from "docx"
+import { MultiStepLoader as Loader } from "./multi-step-loader";
+import { IconSquareRoundedX } from "@tabler/icons-react";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend
-);
+const loadingStates = [
+  {
+    text: "Uploading & Validating Data",
+  },
+  {
+    text: "Analyzing Key Financial Metrics",
+  },
+  {
+    text: "Generating AI-Powered Insights",
+  },
+  {
+    text: "Structuring Report & Visualization",
+  },
+  {
+    text: "Finalizing & Exporting PDF",
+  },
+  
+];
+ 
 
-const FinancialDashboard = () => {
-  const [apiKey, setApiKey] = useState('');
-  const [ticker, setTicker] = useState('AAPL');
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+const API_KEY = "AIzaSyDnGZHEEEZj7m0dGNey9TqGJFtMpN7tmgg" // Replace with your actual API key
 
-  // Fallback data in case API calls fail
-  const getFallbackData = () => ({
-    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    stockPrice: [150, 155, 160, 158, 162, 165],
-    earnings: [2.5, 2.6, 2.7, 2.8, 2.9, 3.0],
-    revenue: [90, 95, 92, 98, 100, 103],
-    margins: [0.3, 0.31, 0.29, 0.32, 0.33, 0.32],
-    debtEquity: [0.4, 0.39, 0.38, 0.37, 0.36, 0.35],
-    cashFlow: [15, 16, 14, 17, 18, 19],
-    netIncome: [12, 13, 11, 14, 15, 16],
-  });
+export default function DashboardPage() {
 
-  const fetchFinancialData = async () => {
-    if (!apiKey) {
-      setError('Please enter your Finnhub API key');
-      return;
+  const [company, setCompany] = useState("")
+  const [reportType, setReportType] = useState("Annual")
+  const [loading, setLoading] = useState(false)
+  const [report, setReport] = useState(null)
+  const [pdf, setPdf] = useState(null)
+
+  const generateReport = async () => {
+    if (!company) {
+      alert("Please enter a company name.")
+      return
     }
+
+    setLoading(true)
+    setReport(null)
+    setPdf(null)
 
     try {
-      setLoading(true);
-      setError(null);
+      const genAI = new GoogleGenerativeAI(API_KEY)
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" })
 
-      const headers = {
-        'Content-Type': 'application/json',
-        'X-Finnhub-Token': apiKey
-      };
+      const prompt = `
+        Generate a professional ${reportType} financial report for ${company} using realistic analysis.
+        Format all section titles in *bold* and make the content detailed.
+        Include:
+        1. *Executive Summary*
+        2. *Income Statement Analysis*
+        3. *Balance Sheet Analysis*
+        4. *Cash Flow Statement Analysis*
+        5. *Key Financial Ratios*
+        6. *Revenue & Cost Breakdown*
+        7. *Market & Competitive Analysis*
+        8. *Debt & Capital Structure*
+        9. *Financial Forecasts*
+        10. *Risks & Challenges*
+        11. *Management Strategy & Outlook*`
 
-      // Test the API key first
-      const testResponse = await fetch(
-        `https://finnhub.io/api/v1/stock/profile2?symbol=${ticker}`,
-        { headers }
-      );
+      const response = await model.generateContent(prompt)
+      const result = await response.response.text()
 
-      if (!testResponse.ok) {
-        throw new Error(
-          testResponse.status === 401 
-            ? 'Invalid API key. Please check your Finnhub API key.'
-            : `API Error: ${testResponse.status}`
-        );
-      }
-
-      // Fetch basic metrics
-      const [metricsResponse, financialsResponse, priceResponse] = await Promise.all([
-        fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${ticker}&metric=all`, { headers }),
-        fetch(`https://finnhub.io/api/v1/stock/financials-reported?symbol=${ticker}`, { headers }),
-        fetch(`https://finnhub.io/api/v1/stock/candle?symbol=${ticker}&resolution=D&from=${Math.floor(Date.now()/1000 - 180*24*60*60)}&to=${Math.floor(Date.now()/1000)}`, { headers })
-      ]);
-
-      if (!metricsResponse.ok || !financialsResponse.ok || !priceResponse.ok) {
-        throw new Error('Failed to fetch some financial data');
-      }
-
-      const [metricsData, financialsData, priceData] = await Promise.all([
-        metricsResponse.json(),
-        financialsResponse.json(),
-        priceResponse.json()
-      ]);
-
-      // Process the data...
-      const processedData = {
-        months: priceData.t?.map(timestamp => 
-          new Date(timestamp * 1000).toLocaleDateString('en-US', { month: 'short' })
-        ) || getFallbackData().months,
-        stockPrice: priceData.c || getFallbackData().stockPrice,
-        earnings: Array(6).fill(metricsData.metric?.epsGrowth || 0),
-        revenue: financialsData.data?.[0]?.report?.bs?.map(item => 
-          item.totalRevenue
-        ) || getFallbackData().revenue,
-        margins: financialsData.data?.[0]?.report?.bs?.map(item =>
-          (item.grossProfit / item.totalRevenue) || 0
-        ) || getFallbackData().margins,
-        debtEquity: Array(6).fill(metricsData.metric?.totalDebtToEquity || 0),
-        cashFlow: financialsData.data?.[0]?.report?.cf?.map(item => 
-          item.cashFromOperating
-        ) || getFallbackData().cashFlow,
-        netIncome: financialsData.data?.[0]?.report?.ic?.map(item => 
-          item.netIncome
-        ) || getFallbackData().netIncome,
-      };
-
-      setData(processedData);
-    } catch (err) {
-      setError(err.message);
-      console.error('Error fetching financial data:', err);
-      // Set fallback data on error
-      setData(getFallbackData());
+      setReport(result)
+      const generatedPdf = generatePDF(result)
+      setPdf(generatedPdf)
+    } catch (error) {
+      console.error("Error:", error)
+      alert("Failed to generate report. Please check API key or try again.")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: true,
-    plugins: {
-      legend: {
-        position: 'top',
+  const generatePDF = (reportContent) => {
+    const doc = new jsPDF({ unit: "mm", format: "a4" })
+
+    doc.setFont("helvetica", "bold")
+    doc.setFontSize(26)
+    doc.setTextColor(0, 123, 255)
+    doc.text("FINANCIAL REPORT", 20, 20)
+
+    doc.setFontSize(18)
+    doc.setTextColor(0, 0, 0)
+    doc.text(`Company: ${company}`, 20, 40)
+    doc.text(`Report Type: ${reportType}`, 20, 50)
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 20, 60)
+
+    let y = 80
+    const pageHeight = doc.internal.pageSize.height
+
+    const parseAndPrintText = (text, startX, startY) => {
+      const words = text.split(/(\*.*?\*)/)
+      words.forEach((word) => {
+        if (word.startsWith("*") && word.endsWith("*")) {
+          doc.setFont("helvetica", "bold")
+          word = word.replace(/\*/g, "")
+        } else {
+          doc.setFont("helvetica", "normal")
+        }
+        doc.text(word, startX, startY)
+        startX += doc.getTextWidth(word) + 2
+      })
+    }
+
+    const lines = reportContent.split("\n")
+    lines.forEach((line) => {
+      if (y > pageHeight - 20) {
+        doc.addPage()
+        y = 20
+        doc.text("FINANCIAL REPORT", 20, 20)
       }
+      parseAndPrintText(line, 20, y)
+      y += 7
+    })
+
+    return doc
+  }
+
+  const downloadPDF = () => {
+    if (pdf) {
+      pdf.save(`${company}-financial-report.pdf`)
     }
-  };
+  }
 
-  const renderCharts = () => {
-    if (!data) return null;
+  const downloadDOCX = () => {
+    if (!report) return
 
-    const lineChartData = {
-      labels: data.months,
-      datasets: [
+    const doc = new Document({
+      sections: [
         {
-          label: 'Stock Price',
-          data: data.stockPrice,
-          borderColor: 'rgb(75, 192, 192)',
-          tension: 0.1
+          properties: {},
+          children: [
+            new Paragraph({
+              children: [new TextRun({ text: "FINANCIAL REPORT", bold: true, size: 32 })],
+            }),
+            new Paragraph({
+              children: [new TextRun({ text: `Company: ${company}`, bold: true })],
+            }),
+            new Paragraph({
+              children: [new TextRun({ text: `Report Type: ${reportType}`, bold: true })],
+            }),
+            new Paragraph({
+              children: [new TextRun({ text: `Generated on: ${new Date().toLocaleDateString()}`, bold: true })],
+            }),
+            ...report.split("\n").map(
+              (line) =>
+                new Paragraph({
+                  children: [new TextRun({ text: line.replace(/\*/g, ""), bold: line.startsWith("*") })],
+                }),
+            ),
+          ],
         },
-        {
-          label: 'EPS Growth',
-          data: data.earnings,
-          borderColor: 'rgb(255, 99, 132)',
-          tension: 0.1
-        }
-      ]
-    };
+      ],
+    })
 
-    const barChartData = {
-      labels: data.months,
-      datasets: [
-        {
-          label: 'Revenue',
-          data: data.revenue,
-          backgroundColor: 'rgba(53, 162, 235, 0.5)'
-        },
-        {
-          label: 'Profit Margins',
-          data: data.margins,
-          backgroundColor: 'rgba(75, 192, 192, 0.5)'
-        }
-      ]
-    };
-
-    const scatterChartData = {
-      datasets: [{
-        label: 'Cash Flow vs Net Income',
-        data: data.cashFlow.map((cf, i) => ({
-          x: cf,
-          y: data.netIncome[i]
-        })),
-        backgroundColor: 'rgb(255, 99, 132)'
-      }]
-    };
-
-    const pieChartData = {
-      labels: ['Your Company', 'Competitor A', 'Competitor B', 'Others'],
-      datasets: [{
-        data: [30, 25, 20, 25],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
-          'rgba(75, 192, 192, 0.5)'
-        ]
-      }]
-    };
-
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ChartContainer title="Stock Price & EPS Growth">
-          <Line data={lineChartData} options={chartOptions} />
-        </ChartContainer>
-
-        <ChartContainer title="Revenue & Margins">
-          <Bar data={barChartData} options={chartOptions} />
-        </ChartContainer>
-
-        <ChartContainer title="Cash Flow vs Net Income">
-          <Scatter data={scatterChartData} options={chartOptions} />
-        </ChartContainer>
-
-        <ChartContainer title="Market Share Analysis">
-          <Pie data={pieChartData} options={chartOptions} />
-        </ChartContainer>
-      </div>
-    );
-  };
+    Packer.toBlob(doc).then((blob) => {
+      saveAs(blob, `${company}-financial-report.docx`)
+    })
+  }
 
   return (
-    <div className="container mx-auto p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-center mb-6">Financial Analytics Dashboard</h1>
-        
-        <div className="max-w-xl mx-auto space-y-4">
-          <div className="flex flex-col space-y-2">
-            <label htmlFor="apiKey" className="text-sm font-medium">
-              Finnhub API Key
-            </label>
-            <input
-              id="apiKey"
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              className="border rounded p-2"
-              placeholder="Enter your Finnhub API key"
-            />
-          </div>
-          
-          <div className="flex flex-col space-y-2">
-            <label htmlFor="ticker" className="text-sm font-medium">
-              Stock Ticker
-            </label>
-            <input
-              id="ticker"
-              type="text"
-              value={ticker}
-              onChange={(e) => setTicker(e.target.value.toUpperCase())}
-              className="border rounded p-2"
-              placeholder="Enter stock ticker (e.g., AAPL)"
-            />
-          </div>
+    <div className="min-h-screen bg-gray-900 text-gray-100 pt-20">
+      <div className="max-w-4xl mx-auto p-6">
+        <div className="bg-gray-800 rounded-lg shadow-xl p-8">
+          <h1 className="text-3xl font-bold text-blue-400 text-center mb-8">📊 Financial Report Generator</h1>
 
-          <button
-            onClick={fetchFinancialData}
-            disabled={loading}
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 disabled:bg-blue-300"
-          >
-            {loading ? 'Loading...' : 'Fetch Data'}
-          </button>
-
-          {error && (
-            <div className="text-red-500 text-center p-2 bg-red-50 rounded">
-              {error}
+          <div className="space-y-6">
+            <div>
+              <label htmlFor="company" className="block text-sm font-medium text-gray-400 mb-2">
+                Company Name
+              </label>
+              <input
+                id="company"
+                type="text"
+                placeholder="Enter company name"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                className="w-full px-4 py-3 text-lg bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+              />
             </div>
-          )}
+
+            <div>
+              <label htmlFor="reportType" className="block text-sm font-medium text-gray-400 mb-2">
+                Report Type
+              </label>
+              <select
+                id="reportType"
+                value={reportType}
+                onChange={(e) => setReportType(e.target.value)}
+                className="w-full px-4 py-3 text-lg bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+              >
+                <option value="Quarterly">Quarterly Report</option>
+                <option value="Annual">Annual Report</option>
+              </select>
+            </div>
+            <Loader loadingStates={loadingStates} loading={loading} duration={2000} />
+            <button onClick={() => { 
+                generateReport(); 
+                setLoading(true); 
+              }}
+              disabled={loading}
+              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-bold text-lg hover:bg-blue-700 transition-colors disabled:bg-blue-800 disabled:text-gray-300"
+            >
+              {loading ? "Generating..." : "Generate Report"}
+            </button>
+            {loading && (
+        <button
+          className="fixed top-4 right-4 text-black dark:text-white z-[120]"
+          onClick={() => setLoading(false)}
+        >
+          <IconSquareRoundedX className="h-10 w-10" />
+        </button>
+      )}
+
+            {report && (
+              <div className="space-y-4 mt-8">
+                <button
+                  onClick={downloadPDF}
+                  className="w-full bg-green-600 text-white py-3 px-4 rounded-lg font-bold text-lg hover:bg-green-700 transition-colors"
+                >
+                  Download PDF
+                </button>
+                <button
+                  onClick={downloadDOCX}
+                  className="w-full bg-purple-600 text-white py-3 px-4 rounded-lg font-bold text-lg hover:bg-purple-700 transition-colors"
+                >
+                  Download DOCX
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-
-      {renderCharts()}
     </div>
-  );
-};
-
-export default FinancialDashboard;
+  )
+}
