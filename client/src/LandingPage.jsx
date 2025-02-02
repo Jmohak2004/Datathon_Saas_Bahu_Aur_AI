@@ -1,6 +1,8 @@
 import { WavyBackground } from "./wavy-background"
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { StarsBackground } from "./stars-background";
+
 
 const FeatureCard = ({ icon, title, description, delay }) => (
   <div 
@@ -99,6 +101,7 @@ function LandingPage({ setIsModalOpen }) {
 
   return (
     <main className="relative min-h-screen bg-gray-900 text-white">
+      <StarsBackground />
       <WavyBackground className="max-w-4xl mx-auto">
       <section className="container flex min-h-[calc(100vh-3.5rem)] max-w-screen-2xl mt-14 flex-col items-center justify-center space-y-8 py-24 text-center md:py-32">
       <div className="space-y-12">
@@ -107,12 +110,15 @@ function LandingPage({ setIsModalOpen }) {
   <div className="px-8 py-2  bg-black rounded-[6px]  relative group transition duration-200 text-white text-1xl  font-semibold">
   Comprehensive 11-Metric Financial Analysis
   </div>
-</button>
-        <h1 className="bg-white bg-clip-text text-4xl  font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
-     Financial Reporting Completely Revolutionized
-          <br />
+</button><div>
+        <h1 className="bg-gradient-to-b from-neutral-800 via-neutral-700 to-neutral-700 dark:from-neutral-800 dark:via-white dark:to-white bg-clip-text text-4xl  font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
+     Financial Reporting 
         </h1>
-        <p className="mx-auto max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
+        <h1 className="bg-gradient-to-b from-neutral-800 via-neutral-700 to-neutral-700 dark:from-neutral-800 dark:via-white dark:to-white bg-clip-text text-4xl  font-bold tracking-tight text-transparent sm:text-5xl md:text-6xl lg:text-7xl">
+     Completely Revolutionized
+        </h1>
+        </div>
+        <p className="dark:text-white text-black text-2xl leading-snug tracking-wide">
         Transform raw financial data into coherent, insightful, and reliable reports with cutting-edge AI and probabilistic consistency
         </p>
       </div>
