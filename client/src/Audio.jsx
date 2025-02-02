@@ -95,6 +95,7 @@ const Audio = () => {
   }, []);
 
   return (
+    <div className="converter-container1">
     <div className="converter-container">
       <h1 className="converter-title">PDF to Audiobook Converter</h1>
       
@@ -138,6 +139,7 @@ const Audio = () => {
           </button>
         )}
       </div>
+    </div>
     </div>
   );
 };

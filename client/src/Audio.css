@@ -1,6 +1,11 @@
+.converter-container1{
+margin-top: auto;
+}
+
 .converter-container {
   max-width: 800px;
-  margin: 2rem auto;
+  /* margin:auto; */
+  margin:auto;
   padding: 2rem;
   background-color: #ffffff;
   border-radius: 12px;
