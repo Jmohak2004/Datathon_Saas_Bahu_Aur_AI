@@ -58,27 +58,28 @@ const Navbar = () => {
             </a>
           </div>
 
-          {/* Desktop Menu - centered */}
           <div className="space-x-12 absolute left-1/2 -translate-x-1/2 hidden md:flex">
-            {[
-              ['Home', '#hero'],
-              ['Features', '#features'],
-              ['How It Works', '#howitworks'],
-              ['Dashboard', '/dashboard'],
-            ].map(([label, href]) => (
-              <a
-                key={label}
-                href={href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(href);
-                }}
-                className="text-gray-300 hover:text-white transition-colors"
-              >
-                {label}
-              </a>
-            ))}
-          </div>
+  {[
+    ['Home', '/'],
+    ['Features', '#features'],
+    ['How It Works', '#howitworks'],
+    ['Dashboard', '/dashboard'],
+  ].map(([label, href]) => (
+    <a
+      key={label}
+      href={href}
+      onClick={(e) => {
+        // Prevent default only if it's not the homepage
+        if (href !== '/') {
+          e.preventDefault();
+          scrollToSection(href);
+        }
+      }}
+    >
+      {label}
+    </a>
+  ))}
+</div>
 
           {/* Get Started Button */}
           <div className="hidden md:block">
