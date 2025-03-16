@@ -11,7 +11,7 @@ const loadingStates = [
     text: "Uploading & Validating Data",
   },
   {
-    text: "Analyzing Key Financial Metrics",
+    text: "Analyzing Key Metrics",
   },
   {
     text: "Generating AI-Powered Insights",
