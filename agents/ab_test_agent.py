@@ -221,7 +221,7 @@ class ABTestAgent:
         """Create detailed test suggestion from opportunity"""
         test_suggestions = {
             'conversion_optimization': {
-                'test_name': f"Conversion Rate Optimization - {opportunity['campaign']}",
+                'test_name': f"Conversion Rate Optimization - {opportunity.get('campaign', 'Unknown Campaign')}",
                 'hypothesis': "Improving landing page design and CTA will increase conversion rates",
                 'variable': 'Landing Page Elements',
                 'expected_impact': '15-25% conversion rate improvement',
@@ -229,7 +229,7 @@ class ABTestAgent:
                 'sample_size': 2000
             },
             'engagement_optimization': {
-                'test_name': f"Engagement Optimization - {opportunity['campaign']}",
+                'test_name': f"Engagement Optimization - {opportunity.get('campaign', 'Unknown Campaign')}",
                 'hypothesis': "More compelling creative and messaging will increase engagement",
                 'variable': 'Ad Creative and Copy',
                 'expected_impact': '10-20% engagement improvement',
@@ -237,7 +237,7 @@ class ABTestAgent:
                 'sample_size': 3000
             },
             'channel_optimization': {
-                'test_name': f"Channel Strategy Test - {opportunity['channel']}",
+                'test_name': f"Channel Strategy Test - {opportunity.get('channel', opportunity.get('campaign', 'Unknown'))}",
                 'hypothesis': "Optimized targeting and bidding will improve ROI",
                 'variable': 'Targeting Parameters',
                 'expected_impact': '20-30% ROI improvement',
