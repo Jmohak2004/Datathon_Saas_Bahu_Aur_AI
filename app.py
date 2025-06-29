@@ -262,12 +262,12 @@ def display_dashboard_overview(campaign_data, visualizer, performance_tracker):
     with col1:
         # Campaign performance chart
         fig = visualizer.create_campaign_performance_chart(campaign_data['campaigns'])
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="dashboard_campaign_performance")
     
     with col2:
         # Customer segment distribution
         fig = visualizer.create_segment_distribution_chart(campaign_data['customers'])
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="dashboard_segment_distribution")
     
     # Recent performance trends
     st.subheader("📈 Performance Trends")
@@ -277,12 +277,12 @@ def display_dashboard_overview(campaign_data, visualizer, performance_tracker):
     with col1:
         # ROI trend
         fig = visualizer.create_roi_trend_chart(campaign_data['daily_metrics'])
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="dashboard_roi_trend")
     
     with col2:
         # Conversion rate trend
         fig = visualizer.create_conversion_trend_chart(campaign_data['daily_metrics'])
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="dashboard_conversion_trend")
 
 def display_campaign_analysis(campaign_data, campaign_analyzer, visualizer):
     """Display campaign analysis results"""
@@ -342,7 +342,7 @@ def display_campaign_analysis(campaign_data, campaign_analyzer, visualizer):
     col1, col2 = st.columns(2)
     with col1:
         fig = visualizer.create_segment_analysis_chart(segmentation_results)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="analysis_segment_chart")
     
     with col2:
         st.subheader("Segment Insights")
@@ -399,7 +399,7 @@ def display_budget_optimization(campaign_data, budget_optimizer, visualizer):
             
             # Create allocation chart
             fig = visualizer.create_budget_allocation_chart(optimal_allocation)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key="budget_allocation_chart")
         
         with col2:
             st.subheader("📊 Expected Results")
@@ -446,13 +446,13 @@ def display_performance_tracking(campaign_data, performance_tracker, visualizer)
         # Campaign performance heatmap
         st.subheader("🔥 Campaign Performance Heatmap")
         fig = visualizer.create_performance_heatmap(campaign_data['campaigns'])
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="performance_heatmap")
     
     with col2:
         # Channel performance comparison
         st.subheader("📺 Channel Performance")
         fig = visualizer.create_channel_performance_chart(campaign_data['campaigns'])
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="channel_performance")
     
     # Predictive analytics
     st.subheader("🔮 Predictive Analytics")
@@ -461,7 +461,7 @@ def display_performance_tracking(campaign_data, performance_tracker, visualizer)
     col1, col2 = st.columns(2)
     with col1:
         fig = visualizer.create_prediction_chart(predictions['revenue_forecast'])
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key="revenue_forecast")
     
     with col2:
         st.subheader("📋 Performance Insights")
@@ -632,12 +632,12 @@ def display_real_time_monitoring(campaign_data, real_time_monitor, visualizer):
         # Campaign performance trend
         campaigns_df = campaign_data['campaigns']
         fig_trend = visualizer.create_campaign_performance_chart(campaigns_df)
-        st.plotly_chart(fig_trend, use_container_width=True)
+        st.plotly_chart(fig_trend, use_container_width=True, key="monitoring_trend_chart")
     
     with col2:
         # Channel health heatmap
         fig_heatmap = visualizer.create_performance_heatmap(campaigns_df)
-        st.plotly_chart(fig_heatmap, use_container_width=True)
+        st.plotly_chart(fig_heatmap, use_container_width=True, key="monitoring_heatmap_chart")
     
     # Alert configuration
     with st.expander("⚙️ Alert Configuration"):
@@ -666,9 +666,9 @@ def display_real_time_monitoring(campaign_data, real_time_monitor, visualizer):
     
     # Auto-refresh functionality for monitoring
     if auto_refresh_monitoring:
-        st.markdown("🔄 **Auto-refresh enabled** - Monitoring data updates every 30 seconds")
-        time.sleep(30)
-        st.rerun()
+        st.markdown("🔄 **Auto-refresh enabled** - Use the refresh button to update monitoring data")
+        if st.button("🔄 Refresh Monitoring Data", key="refresh_monitoring"):
+            st.rerun()
 
 if __name__ == "__main__":
     main()
