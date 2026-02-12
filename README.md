@@ -1,43 +1,123 @@
-# Datathon Finallytics
+# 📊 FinAlytics – AI-Generated Financial Reporting System
 
-## Project Overview
-Datathon Finallytics is a data-driven project aimed at extracting meaningful insights from financial datasets. It leverages advanced data analysis techniques, machine learning models, and visualization tools to uncover trends, patterns, and anomalies in financial data.
+<!-- <p align="center">
+  <img src="finalytics-banner.png" alt="FinAlytics Banner" />
+</p> -->
 
-## Features
-- **Data Preprocessing:** Cleaning and structuring financial datasets.
-- **Exploratory Data Analysis (EDA):** Identifying key trends and patterns.
-- **Machine Learning Models:** Predictive analytics and anomaly detection.
-- **Interactive Visualizations:** Charts and graphs for data representation.
-- **User Authentication:** Secure login using Firebase Auth.
-- **AI Agents:** Integration of Python agents and Gemini AI for advanced insights.
-- **Scalability:** Efficient handling of large datasets.
+**FinAlytics** is an intelligent, AI-powered financial analysis and reporting tool that combines **Python**, **React.js**, **Gemini API**, and **real-time market data** to generate statistically sound financial narratives. Designed to minimize misinformation and assist in accurate investment decisions, FinAlytics bridges the gap between AI and reliable financial forecasting.
 
-## Tech Stack
-- **Frontend:** React, Tailwind CSS
-- **Backend:** Python agents, Gemini AI
-- **Authentication:** Firebase Auth
-- **Database:** PostgreSQL / MySQL (if applicable)
-- **Visualization:** Streamlit / Dash (if applicable)
-- **Cloud & Deployment:** AWS / Google Cloud / Azure (if applicable)
+---
 
-## Installation & Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo/datathon-finalytics.git
-   cd datathon-finalytics
-   ```
-2. Start the frontend:
-   ```bash
-   npm install 
-   npm run dev
-   ```
+## 🔍 Key Features
 
-## Usage
-1. Load the dataset into the application.
-2. Authenticate using Firebase Auth.
-3. Explore visualizations and data insights.
-4. Apply machine learning models and AI agents for predictions.
-5. Generate reports and export results.
+- 📈 **AI-Generated Financial Reports**  
+  Automatically produces financial summaries, trends, and narratives with logical flow and statistical consistency.
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- 💡 **Real-Time Data Integration**  
+  Uses the `yFinance` API to fetch live market prices, historical data, and economic indicators.
+
+- 🔒 **Misinformation Prevention**  
+  Validates insights using probabilistic checks and Gemini-based AI fact-verification.
+
+- 📊 **Statistical Analysis**  
+  Leverages NumPy to run analytical models on fetched datasets, ensuring data-backed decision support.
+
+- ⚙️ **Full-Stack Solution**  
+  Firebase powers secure backend services, including data logging and authentication.
+
+---
+
+## 🛠 Tech Stack
+
+| Layer        | Technologies                          |
+|--------------|---------------------------------------|
+| Frontend     | React.js                              |
+| Backend      | Python (Flask/FastAPI) + Firebase     |
+| AI/ML        | Gemini API (Google), Custom NLP Models |
+| Data Source  | yFinance API                          |
+| Analysis     | NumPy, Pandas                         |
+| Hosting      | Firebase / Render / Vercel (Optional) |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/aryansanganti/finalytics.git
+cd finalytics
+```
+2. Backend Setup (Python)
+```bash
+cd backend
+pip install -r requirements.txt
+python app.py
+Make sure you have Python 3.9+ installed. Update API keys in .env.
+```
+3. Frontend Setup (React)
+``` bash
+
+cd frontend
+npm install
+npm run dev
+Visit http://localhost:5173 to interact with the frontend.
+``` bash
+
+finalytics/
+├── backend/
+│   ├── app.py
+│   ├── services/
+│   └── utils/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── App.jsx
+├── public/
+│   └── finalytics-banner.png
+├── .env
+├── README.md
+└── requirements.txt / package.json
+
+
+```
+✅ Use Cases
+🧠 Investors seeking AI-generated insights with data validation
+
+🗞️ Journalists writing financial summaries
+
+📉 Educators teaching financial data analysis
+
+🏛️ Institutions ensuring regulatory-compliant report generation
+
+🔐 Environment Variables
+.env file required in root of backend:
+
+env
+GEMINI_API_KEY=your_gemini_api_key
+FIREBASE_API_KEY=your_firebase_api_key
+YFINANCE_API_KEY=your_yfinance_key (if required)
+
+🧩 Roadmap
+ Add GPT-style prompt interface for natural queries
+
+ Export reports to PDF/CSV
+
+ Add sector-specific deep dives
+
+ Mobile PWA support
+
+🤝 Contributing
+Pull requests are welcome!
+Follow conventional commits and submit issues for bugs or enhancements.
+
+bash
+Copy
+Edit
+📄 License
+This project is licensed under the MIT License.
+See the LICENSE file for more details.
+
+👤 Author
+Aryan Sanganti
