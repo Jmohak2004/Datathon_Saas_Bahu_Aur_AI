@@ -1,8 +1,8 @@
 # 📊 FinAlytics – AI-Generated Financial Reporting System
 
-<p align="center">
+<!-- <p align="center">
   <img src="finalytics-banner.png" alt="FinAlytics Banner" />
-</p>
+</p> -->
 
 **FinAlytics** is an intelligent, AI-powered financial analysis and reporting tool that combines **Python**, **React.js**, **Gemini API**, and **real-time market data** to generate statistically sound financial narratives. Designed to minimize misinformation and assist in accurate investment decisions, FinAlytics bridges the gap between AI and reliable financial forecasting.
 
